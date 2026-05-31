@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KNK Store Accounts</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div id="loginView" class="login-shell">
+      <section class="login-card">
+        <div>
+          <p class="eyebrow">KNK Store</p>
+          <h1>Cement Shop Accounts</h1>
+          <p class="muted" id="loginHelp">Create your private PIN to start using the shop book.</p>
+        </div>
+        <form id="loginForm" class="stack">
+          <label>
+            <span id="pinLabel">Create PIN</span>
+            <input id="pinInput" type="password" inputmode="numeric" autocomplete="current-password" minlength="4" placeholder="Enter PIN" required>
+          </label>
+          <button class="primary" type="submit" id="loginButton">Start</button>
+          <p class="tiny">This first version stores data in this browser. Use Backup Export regularly before clearing browser data.</p>
+        </form>
+      </section>
+    </div>
+
+    <div id="appView" class="app-shell hidden">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">K</div>
+          <div>
+            <strong>KNK Store</strong>
+            <span>Cement accounts</span>
+          </div>
+        </div>
+        <nav class="nav" aria-label="Main">
+          <button class="nav-item active" data-view="dashboard">Dashboard</button>
+          <button class="nav-item" data-view="entry">Daily Entry</button>
+          <button class="nav-item" data-view="stock">Stock</button>
+          <button class="nav-item" data-view="customers">Customers</button>
+          <button class="nav-item" data-view="suppliers">Suppliers</button>
+          <button class="nav-item" data-view="reports">Reports</button>
+          <button class="nav-item" data-view="settings">Settings</button>
+        </nav>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="todayText"></p>
+            <h2 id="viewTitle">Dashboard</h2>
+          </div>
+          <div class="top-actions">
+            <button class="ghost" id="backupButton" type="button">Export Backup</button>
+            <button class="ghost" id="lockButton" type="button">Lock</button>
+          </div>
+        </header>
+
+        <section id="dashboardView" class="view active">
+          <div class="kpi-grid">
+            <article class="kpi">
+              <span>Stock 50kg Bags</span>
+              <strong id="kpiBags">0</strong>
+            </article>
+            <article class="kpi">
+              <span>Customer Pending</span>
+              <strong id="kpiCustomerDue">INR 0</strong>
+            </article>
+            <article class="kpi">
+              <span>Supplier Pending</span>
+              <strong id="kpiSupplierDue">INR 0</strong>
+            </article>
+            <article class="kpi">
+              <span>This Month Profit</span>
+              <strong id="kpiProfit">INR 0</strong>
+            </article>
+          </div>
+          <div class="split">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>Quick Sale</h3>
+                <button class="small" data-jump="entry">Open Full Entry</button>
+              </div>
+              <form id="quickSaleForm" class="entry-grid compact"></form>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>Low Stock</h3>
+              </div>
+              <div id="lowStockList" class="list"></div>
+            </section>
+          </div>
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Recent Entries</h3>
+            </div>
+            <div id="recentEntries" class="table-wrap"></div>
+          </section>
+        </section>
+
+        <section id="entryView" class="view">
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Daily Entry Book</h3>
+                <p class="muted">Default is sale to customer. Choose another entry type when needed.</p>
+              </div>
+            </div>
+            <form id="entryForm" class="entry-grid"></form>
+          </section>
+        </section>
+
+        <section id="stockView" class="view">
+          <div class="split">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>Stock Balance</h3>
+              </div>
+              <div id="stockTable" class="table-wrap"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>Open 50kg Bag Into Small Packets</h3>
+              </div>
+              <form id="repackForm" class="stack"></form>
+            </section>
+          </div>
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Opening Stock / Correction</h3>
+                <p class="muted">Use this for current stock already in shop, or to correct counted stock.</p>
+              </div>
+            </div>
+            <form id="openingStockForm" class="entry-grid"></form>
+          </section>
+        </section>
+
+        <section id="customersView" class="view">
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Customer Balances</h3>
+              <input id="customerSearch" class="search" type="search" placeholder="Search customer">
+            </div>
+            <div id="customerTable" class="table-wrap"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Customer History</h3>
+            </div>
+            <div id="customerHistory" class="list muted">Select a customer to see all cement and payment details.</div>
+          </section>
+        </section>
+
+        <section id="suppliersView" class="view">
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Supplier Balances</h3>
+              <input id="supplierSearch" class="search" type="search" placeholder="Search supplier">
+            </div>
+            <div id="supplierTable" class="table-wrap"></div>
+          </section>
+        </section>
+
+        <section id="reportsView" class="view">
+          <div class="report-controls">
+            <label>From <input id="reportFrom" type="date"></label>
+            <label>To <input id="reportTo" type="date"></label>
+            <button class="primary" id="printReportButton" type="button">Print / Save PDF</button>
+          </div>
+          <div class="split">
+            <section class="panel">
+              <h3>Profit & Loss</h3>
+              <div id="plReport" class="report"></div>
+            </section>
+            <section class="panel">
+              <h3>Cash Inflow / Outflow</h3>
+              <div id="cashReport" class="report"></div>
+            </section>
+          </div>
+          <div class="split">
+            <section class="panel">
+              <h3>Balance Sheet</h3>
+              <div id="balanceReport" class="report"></div>
+            </section>
+            <section class="panel">
+              <h3>Monthly Sales Visual</h3>
+              <div id="salesChart" class="chart"></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="settingsView" class="view">
+          <div class="split">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>Cement Company Rates</h3>
+              </div>
+              <form id="rateForm" class="entry-grid compact"></form>
+              <div id="rateTable" class="table-wrap"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>Backup, Restore, PIN</h3>
+              </div>
+              <div class="stack">
+                <button class="primary" id="exportButton" type="button">Export Backup File</button>
+                <label class="filebox">
+                  Import Backup File
+                  <input id="importInput" type="file" accept="application/json">
+                </label>
+                <label>New PIN <input id="newPin" type="password" inputmode="numeric" placeholder="Minimum 4 digits"></label>
+                <button class="ghost" id="changePinButton" type="button">Change PIN</button>
+                <button class="danger" id="clearDataButton" type="button">Clear All Data</button>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <datalist id="customerNames"></datalist>
+    <datalist id="supplierNames"></datalist>
+    <div id="toast" class="toast"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
